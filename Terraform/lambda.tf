@@ -44,7 +44,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "s3:PutObject"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:s3:::your_bucket_name/*"
+        Resource = "arn:aws:s3:::lambda-bucket/*"
       }
     ]
   })
@@ -60,11 +60,11 @@ resource "aws_lambda_permission" "s3_trigger_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.convert_images.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::your_bucket_name"
+  source_arn    = "arn:aws:s3:::lambda-bucket"
 }
 
 resource "aws_s3_bucket_notification" "lambda_notification" {
-  bucket = "your_bucket_name"
+  bucket = "lambda-bucket"
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.convert_images.arn

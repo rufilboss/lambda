@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_s3_bucket_object" "files" {
-  for_each = { for file in local.files_to_upload : file => file }
+  for_each = { for file in locals.files_to_upload : file => file }
 
   bucket = aws_s3_bucket.my_bucket.id
   key    = each.value
