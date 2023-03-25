@@ -13,6 +13,6 @@ provider "aws" {
 }
 
 # Create a VPC
-resource "aws_vpc" "lambda_vpc" {
+/* resource "aws_vpc" "lambda_vpc" {
   cidr_block = "10.0.0.0/16"
-}
+} */
