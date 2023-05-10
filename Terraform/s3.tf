@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = "lambda-bucket"
+  bucket = "lambda-gif-bucket"
 }
 
 locals {

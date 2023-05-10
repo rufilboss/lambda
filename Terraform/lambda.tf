@@ -1,9 +1,12 @@
 resource "aws_lambda_function" "convert_images" {
-  filename      = "convert_images.zip"
+  filename      = "main.py"
   function_name = "convert_images_lambda"
   role          = aws_iam_role.lambda_role.arn
-  handler       = "lambda_handler"
+  handler       = "main.lambda_handler"
   runtime       = "python3.8"
+
+  source_code_hash = filebase64("${path.module}/main.py")
+
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -44,7 +47,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "s3:PutObject"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:s3:::lambda-bucket/*"
+        Resource = "arn:aws:s3:::lambda-gif-bucket/*"
       }
     ]
   })
@@ -60,11 +63,11 @@ resource "aws_lambda_permission" "s3_trigger_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.convert_images.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::lambda-bucket"
+  source_arn    = "arn:aws:s3:::lambda-gif-bucket"
 }
 
 resource "aws_s3_bucket_notification" "lambda_notification" {
-  bucket = "lambda-bucket"
+  bucket = "lambda-gif-bucket"
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.convert_images.arn

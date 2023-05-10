@@ -6,7 +6,7 @@ def lambda_handler(event, context):
     s3 = boto3.client('s3')
 
     # Retrieve list of objects in S3 bucket
-    bucket_name = 'lambda-bucket'
+    bucket_name = 'lambda-gif-bucket'
     objects = s3.list_objects_v2(Bucket=bucket_name)
 
     # Loop through objects and convert images to GIF format
