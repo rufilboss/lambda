@@ -1,11 +1,11 @@
 resource "aws_lambda_function" "convert_images" {
-  filename      = "main.py"
-  function_name = "convert_images_lambda"
+  filename      = "gif_converter.zip"
+  function_name = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
-  handler       = "main.lambda_handler"
+  handler       = "git_converter.lambda_handler"
   runtime       = "python3.8"
 
-  source_code_hash = filebase64("${path.module}/main.py")
+  /* source_code_hash = filebase64("${path.module}/main.py") */
 
 }
 
