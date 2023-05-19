@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "convert_images" {
   filename      = "gif_converter.zip"
-  function_name = "lambda_handler"
+  function_name = "gif_converter"
   role          = aws_iam_role.lambda_role.arn
   handler       = "git_converter.lambda_handler"
   runtime       = "python3.8"
@@ -73,4 +73,6 @@ resource "aws_s3_bucket_notification" "lambda_notification" {
     lambda_function_arn = aws_lambda_function.convert_images.arn
     events              = ["s3:ObjectCreated:*"]
   }
+  
+  depends_on = [aws_s3_bucket.bucket]
 }
