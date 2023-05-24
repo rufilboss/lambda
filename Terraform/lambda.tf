@@ -65,7 +65,35 @@ resource "aws_lambda_permission" "s3_trigger_permission" {
   source_arn    = "arn:aws:s3:::lambda-gif-bucket"
 }
 
+/* resource "aws_sns_topic" "notification" {
+  name = "lambda-gif-bucket-notification"
+
+  topic {
+    topic_arn = aws_sns_topic.notification.arn
+    events    = ["s3:ObjectCreated:*"]
+  }
+
+  depends_on = [aws_s3_bucket.bucket]
+} */
+
+
 resource "aws_s3_bucket_notification" "lambda_notification" {
+  bucket = "lambda-gif-bucket"
+
+  topic {
+    topic_arn = aws_sns_topic.notification.arn
+    events    = ["s3:ObjectCreated:*"]
+  }
+
+  depends_on = [aws_s3_bucket.bucket]
+}
+
+resource "aws_sns_topic" "notification" {
+  name = "LambdaNotificationTopic"
+}
+
+
+/* resource "aws_s3_bucket_notification" "lambda_notification" {
   bucket = "lambda-gif-bucket"
 
   lambda_function {
@@ -73,8 +101,9 @@ resource "aws_s3_bucket_notification" "lambda_notification" {
     events              = ["s3:ObjectCreated:*"]
   }
 
-  depends_on = [aws_s3_bucket.bucket]
-}
+  
+} */
+
 
 /* --------------------------------------------------------- */
 
