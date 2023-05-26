@@ -22,17 +22,6 @@ resource "aws_sns_topic" "notification" {
   policy = data.aws_iam_policy_document.policy.json
 }
 
-
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = aws_s3_bucket.bucket.id
-
-  topic {
-    topic_arn     = aws_sns_topic.notification.arn
-    events        = ["s3:ObjectCreated:*"]
-    filter_suffix = ".jpg"
-  }
-}
-
 resource "aws_sns_topic_subscription" "toemail" {
   topic_arn = aws_sns_topic.notification.arn
   protocol  = "email"

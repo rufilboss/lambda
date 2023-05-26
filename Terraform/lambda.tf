@@ -63,5 +63,5 @@ resource "aws_lambda_permission" "s3_trigger_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.convert_images.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::lambda-gif-bucket"
+  source_arn    = aws_s3_bucket.bucket.arn
 }
