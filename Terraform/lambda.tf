@@ -4,7 +4,7 @@ resource "aws_lambda_function" "convert_images" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
-  publish       = true
+  /* publish       = true */
 
   source_code_hash = filebase64("${path.module}/gif_converter.zip")
 }
