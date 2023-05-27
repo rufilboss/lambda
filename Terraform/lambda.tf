@@ -66,3 +66,10 @@ resource "aws_lambda_permission" "s3_trigger_permission" {
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.bucket.arn
 }
+
+/* resource "aws_lambda_layer_version" "lambda_layer" {
+  filename   = "lambda_function.zip"
+  layer_name = "lambda_python_layer"
+
+  compatible_runtimes = ["python3.8"]
+} */
